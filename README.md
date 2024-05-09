@@ -1,5 +1,6 @@
 
 ## Spendbase
+![Cover](https://github.com/artembilyy/Spenbase-test-task/assets/110157916/5be3d156-e134-4101-b6d3-e5d9cdeae685)
 
 # Getting Started
 
