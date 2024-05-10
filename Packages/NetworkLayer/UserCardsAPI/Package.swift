@@ -5,14 +5,21 @@ import PackageDescription
 
 let package = Package(
     name: "UserCardsAPI",
+    platforms: [.iOS(.v17)],
     products: [
         .library(
             name: "UserCardsAPI",
             targets: ["UserCardsAPI"])
     ],
+    dependencies: [
+        .package(name: "CoreNetwork", path: "../CoreNetwork")
+    ],
     targets: [
         .target(
-            name: "UserCardsAPI"),
+            name: "UserCardsAPI",
+            dependencies: [
+                .product(name: "CoreNetwork", package: "CoreNetwork")
+            ]),
         .testTarget(
             name: "UserCardsAPITests",
             dependencies: ["UserCardsAPI"])

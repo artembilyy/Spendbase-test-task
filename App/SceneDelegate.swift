@@ -6,6 +6,7 @@
 //
 
 import LaunchSplashScreen
+import TabBarCoordinator
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -21,7 +22,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         launchAppWithSplashScreen(scene: windowScene, window: window)
 
         self.window = window
-        self.window?.rootViewController = ViewController()
+
+        let tabBarCoordinator = TabBarCoordinator()
+        tabBarCoordinator.start()
+
+        self.window?.rootViewController = tabBarCoordinator.tabBarController
         self.window?.makeKeyAndVisible()
     }
 
