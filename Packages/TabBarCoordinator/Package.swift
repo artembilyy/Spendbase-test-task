@@ -12,17 +12,13 @@ let package = Package(
             targets: ["TabBarCoordinator"])
     ],
     dependencies: [
-        .package(name: "CoreCoordinator", path: "../CoreCoordinator"),
-        .package(name: "HomeFeature", path: "../HomeFeature"),
-        .package(name: "EmptyFeature", path: "../EmptyFeature")
+        .package(name: "CoreCoordinator", path: "../CoreCoordinator")
     ],
     targets: [
         .target(
             name: "TabBarCoordinator",
             dependencies: [
-                .product(name: "CoreCoordinator", package: "CoreCoordinator"),
-                .product(name: "HomeFeature", package: "HomeFeature"),
-                .product(name: "EmptyFeature", package: "EmptyFeature")
+                .product(name: "CoreCoordinator", package: "CoreCoordinator")
             ],
             path: "Sources",
             resources: [.process("Resources/Assets.xcassets")]),

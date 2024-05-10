@@ -12,13 +12,23 @@ let package = Package(
             targets: ["HomeFeature"])
     ],
     dependencies: [
-        .package(name: "CoreCoordinator", path: "../CoreCoordinator")
+        .package(name: "CoreCoordinator", path: "../CoreCoordinator"),
+        .package(name: "CoreUI", path: "../CoreUI"),
+        .package(name: "UserCardsAPI", path: "../UserCardsAPI"),
+        .package(name: "CardDataStorage", path: "../CardDataStorage"),
+        .package(name: "CardDataFetcher", path: "../CardDataFetcher")
     ],
     targets: [
         .target(
             name: "HomeFeature", dependencies: [
-                .product(name: "CoreCoordinator", package: "CoreCoordinator")
-            ]),
+                .product(name: "CoreCoordinator", package: "CoreCoordinator"),
+                .product(name: "CoreUI", package: "CoreUI"),
+                .product(name: "UserCardsAPI", package: "UserCardsAPI"),
+                .product(name: "CardDataStorage", package: "CardDataStorage"),
+                .product(name: "CardDataFetcher", package: "CardDataFetcher")
+            ],
+            path: "Sources",
+            resources: [.process("Resources/Assets.xcassets")]),
         .testTarget(
             name: "HomeFeatureTests",
             dependencies: ["HomeFeature"])

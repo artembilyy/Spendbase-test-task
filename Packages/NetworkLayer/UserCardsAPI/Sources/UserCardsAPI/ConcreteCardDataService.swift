@@ -24,44 +24,44 @@ public struct ConcreteCardDataService: HTTPClient, CardDataService {
     }
 
     public func fetchTotalUserBalance() async throws -> CardBalanceModel {
-        do {
-            try await sendRequest(
-                apiRequest: CardDataServiceRequest(
-                    accessToken: token,
-                    requestType: .userBalance),
-                responseModel: CardBalanceModel.self,
-                decoder: decoder)
-            return CardBalanceModel.mockData
-        } catch {
-            throw error
-        }
+//        do {
+//            try await sendRequest(
+//                apiRequest: CardDataServiceRequest(
+//                    accessToken: token,
+//                    requestType: .userBalance),
+//                responseModel: CardBalanceModel.self,
+//                decoder: decoder)
+        return CardBalanceModel.mockData
+//        } catch {
+//            throw error
+//        }
     }
 
     public func fetchUserCards() async throws -> CardsModel {
-        do {
-            try await sendRequest(
-                apiRequest: CardDataServiceRequest(
-                    accessToken: token,
-                    requestType: .userCards),
-                responseModel: CardBalanceModel.self,
-                decoder: decoder)
-            return CardsModel.mockData
-        } catch {
-            throw error
-        }
+//        do {
+//            try await sendRequest(
+//                apiRequest: CardDataServiceRequest(
+//                    accessToken: token,
+//                    requestType: .userCards),
+//                responseModel: CardBalanceModel.self,
+//                decoder: decoder)
+        return CardsModel.mockData
+//        } catch {
+//            throw error
+//        }
     }
 
     public func fetchUserTransactions() async throws -> TransactionsModel {
-        do {
-            try await sendRequest(
-                apiRequest: CardDataServiceRequest(
-                    accessToken: token,
-                    requestType: .userTransactions),
-                responseModel: CardBalanceModel.self,
-                decoder: decoder)
-            return TransactionsModel.mockData
-        } catch {
-            throw error
-        }
+//        do {
+//            try await sendRequest(
+//                apiRequest: CardDataServiceRequest(
+//                    accessToken: token,
+//                    requestType: .userTransactions),
+//                responseModel: CardBalanceModel.self,
+//                decoder: decoder)
+        return TransactionsModel.mockData
+//        } catch {
+//            throw error
+//        }
     }
 }

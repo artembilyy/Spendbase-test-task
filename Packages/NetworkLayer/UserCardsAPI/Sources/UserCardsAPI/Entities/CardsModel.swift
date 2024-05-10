@@ -34,8 +34,8 @@ public struct CardsModel: Decodable {
 
 extension CardsModel {
     static let mockData = Self(cards: [
-        Card(id: "1", cardLast4: "1234", cardName: "John Doe", isLocked: false, isTerminated: false, spent: 500, limit: 1000, limitType: "Credit", cardHolder: CardHolder(id: "1", fullName: "John Doe", email: "john.doe@example.com", logoURL: "https://example.com/logo.png"), fundingSource: "Visa", issuedAt: "2024-05-09T12:00:00Z"),
-        Card(id: "2", cardLast4: "5678", cardName: "Jane Smith", isLocked: true, isTerminated: false, spent: 200, limit: 500, limitType: "Debit", cardHolder: CardHolder(id: "2", fullName: "Jane Smith", email: "jane.smith@example.com", logoURL: "https://example.com/logo.png"), fundingSource: "Mastercard", issuedAt: "2024-05-09T12:00:00Z"),
-        Card(id: "3", cardLast4: "9012", cardName: "Alice Johnson", isLocked: false, isTerminated: true, spent: 100, limit: 200, limitType: "Credit", cardHolder: CardHolder(id: "3", fullName: "Alice Johnson", email: "alice.johnson@example.com", logoURL: "https://example.com/logo.png"), fundingSource: "American Express", issuedAt: "2024-05-09T12:00:00Z")
+        Card(id: "1", cardLast4: "1234", cardName: "Virtual card", isLocked: false, isTerminated: false, spent: 500, limit: 1000, limitType: "Credit", cardHolder: CardHolder(id: "1", fullName: "John Doe", email: "john.doe@example.com", logoURL: "https://example.com/logo.png"), fundingSource: "Visa", issuedAt: "2024-05-09T12:00:00Z"),
+        Card(id: "2", cardLast4: "5678", cardName: "Slack", isLocked: true, isTerminated: false, spent: 200, limit: 500, limitType: "Debit", cardHolder: CardHolder(id: "2", fullName: "Jane Smith", email: "jane.smith@example.com", logoURL: "https://example.com/logo.png"), fundingSource: "Mastercard", issuedAt: "2024-05-09T12:00:00Z"),
+        Card(id: "3", cardLast4: "9012", cardName: "Google", isLocked: false, isTerminated: true, spent: 100, limit: 200, limitType: "Credit", cardHolder: CardHolder(id: "3", fullName: "Alice Johnson", email: "alice.johnson@example.com", logoURL: "https://example.com/logo.png"), fundingSource: "American Express", issuedAt: "2024-05-09T12:00:00Z")
     ])
 }

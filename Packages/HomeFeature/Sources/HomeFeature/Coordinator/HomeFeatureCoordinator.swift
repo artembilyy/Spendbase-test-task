@@ -10,17 +10,22 @@ import UIKit
 
 public final class HomeFeatureCoordinator: Coordinator {
 
+//    public typealias Dependencies = HomeFeatureViewModel.Dependencies
+
     public let navigationController: UINavigationController?
     public var childCoordinators: [Coordinator] = []
     public weak var parentCoordinator: Coordinator?
 
-    public init(navigationController: UINavigationController?) {
+    private let dependencies: HomeFeatureViewModel.Dependencies
+
+    public init(navigationController: UINavigationController?, dependencies: HomeFeatureViewModel.Dependencies) {
         self.navigationController = navigationController
+        self.dependencies = dependencies
     }
 
     public func start() {
-        let homeFeatureViewController = HomeFeatureViewController()
-        homeFeatureViewController.title = "Money"
+        let viewModel = HomeFeatureViewModel(dependencies: dependencies)
+        let homeFeatureViewController = HomeFeatureViewController(viewModel: viewModel)
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.setViewControllers([homeFeatureViewController], animated: true)

@@ -5,13 +5,15 @@
 //  Created by Artem Bilyi on 09.05.2024.
 //
 
+import AppFactory
 import LaunchSplashScreen
-import TabBarCoordinator
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+
+    private var appFactory: AppFactory?
 
     private var splashPresenter: SplashPresenterDescription!
 
@@ -21,12 +23,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         launchAppWithSplashScreen(scene: windowScene, window: window)
 
+        appFactory = AppFactory()
         self.window = window
 
-        let tabBarCoordinator = TabBarCoordinator()
-        tabBarCoordinator.start()
-
-        self.window?.rootViewController = tabBarCoordinator.tabBarController
+        let tabBarCoordinator = appFactory?.makeTabBarCoordinator()
+        tabBarCoordinator?.start()
+        self.window?.rootViewController = tabBarCoordinator?.tabBarController
         self.window?.makeKeyAndVisible()
     }
 
