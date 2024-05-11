@@ -111,6 +111,8 @@ final class MoneyTransferViewController: UIViewController {
             .sink { [unowned self] status in
                 switch status {
                 case .empty:
+                    bottomLabel.textColor = style.bottomLabelTextColor
+                    bottomLabel.setColorToText(targetText: viewModel.currentBalance, color: .black)
                     continueButton.backgroundColor = style.continueButtonBackgroundColor
                     continueButton.isEnabled = false
                 case .valid:
