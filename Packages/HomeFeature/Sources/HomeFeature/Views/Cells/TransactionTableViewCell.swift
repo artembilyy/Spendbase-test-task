@@ -7,6 +7,7 @@
 
 import CoreUI
 import UIKit
+import UserCardsAPI
 
 final class TransactionTableViewCell: UITableViewCell {
 
@@ -24,7 +25,7 @@ final class TransactionTableViewCell: UITableViewCell {
 
     private struct Style {
         let amountLabelFont = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        let amountLabelTextColor = ThemeColor.darkGrayishBlue.asUIColor()
+        let amountLabelTextColorDefault = ThemeColor.darkGrayishBlue.asUIColor()
         let cardNumberLabelFont = UIFont.systemFont(ofSize: 13, weight: .semibold)
         let cardNumberLabelTextColor = ThemeColor.darkGrayishBlue.asUIColor()
         let circleViewColor = ThemeColor.lightGrayishBlue.asUIColor()
@@ -60,7 +61,24 @@ final class TransactionTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure() {}
+    func configure(transaction: TransactionsModel.Transaction?) {
+        guard let transaction else { return }
+        nameLabel.text = transaction.merchantName
+        cardNumberLabel.text = transaction.pan
+
+        guard let properties = TransactionCellStateFactory.configure(transaction: transaction) else {
+            return
+        }
+
+        amountLabel.text = properties.amount
+        amountLabel.textColor = properties.amountColor
+        failedView.isHidden = properties.isSuccess //
+        attachmentsImageView.alpha = properties.attachmentShouldShow ? 1 : 0
+        transactionImageView.image = properties.isLoad
+            ? UIImage(resource: .card)
+            : UIImage(resource: .purchaseArrow)
+
+    }
 
     private func setupUI() {
         selectionStyle = .none
@@ -77,7 +95,6 @@ final class TransactionTableViewCell: UITableViewCell {
 
     private func configureTransactionImageView() {
         transactionImageView.translatesAutoresizingMaskIntoConstraints = false
-        transactionImageView.image = UIImage(resource: .card)
         addSubview(transactionImageView)
     }
 
@@ -96,13 +113,11 @@ final class TransactionTableViewCell: UITableViewCell {
     }
 
     private func configureNameLabel() {
-        nameLabel.text = "Load"
         nameLabel.font = style.nameLabelFont
         nameLabel.textColor = style.nameLabelTextColor
     }
 
     private func configureCardNumberLabel() {
-        cardNumberLabel.text = "•• 7544"
         cardNumberLabel.font = style.cardNumberLabelFont
         cardNumberLabel.textColor = style.cardNumberLabelTextColor
     }
@@ -126,9 +141,8 @@ final class TransactionTableViewCell: UITableViewCell {
     }
 
     private func configureAmountLabel() {
-        amountLabel.text = "€1000"
         amountLabel.font = style.amountLabelFont
-        amountLabel.textColor = style.amountLabelTextColor
+        amountLabel.textColor = style.amountLabelTextColorDefault
         addSubview(amountLabel)
     }
 

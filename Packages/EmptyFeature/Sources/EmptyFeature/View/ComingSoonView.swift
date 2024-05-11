@@ -5,6 +5,7 @@
 //  Created by Artem Bilyi on 10.05.2024.
 //
 
+import CoreUI
 import UIKit
 
 final class ComingSoonView: UIView {
@@ -14,9 +15,11 @@ final class ComingSoonView: UIView {
     }
 
     private struct Style {
-        let stackViewSize = CGSize(width: 91, height: 108)
+        let backgroundColor = ThemeColor.lightGrayishBlue.asUIColor()
+        let stackViewSize = CGSize(width: 200, height: 108)
         let logoImageViewSize = CGSize(width: 80, height: 80)
         let labelFont = UIFont.preferredFont(forTextStyle: .subheadline).withSize(15)
+        let labelColor = ThemeColor.grayishBlue.asUIColor()
     }
 
     private let stackView = UIStackView()
@@ -27,8 +30,7 @@ final class ComingSoonView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(red: 246 / 255, green: 247 / 255, blue: 249 / 255, alpha: 1)
-
+        backgroundColor = style.backgroundColor
         configureStackView()
         configureLogoView()
         configureLabel()
@@ -59,7 +61,7 @@ final class ComingSoonView: UIView {
     }
 
     private func configureLabel() {
-        label.textColor = UIColor(red: 179 / 255, green: 182 / 255, blue: 190 / 255, alpha: 1)
+        label.textColor = style.labelColor
         label.font = style.labelFont
         label.text = Text.comingSoon.rawValue
         label.textAlignment = .center

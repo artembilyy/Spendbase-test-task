@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UserCardsAPI
 
 final class CardTableViewCell: UITableViewCell {
 
@@ -37,7 +38,9 @@ final class CardTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure() {}
+    func configure(card: CardsModel.Card?) {
+        nameLabel.text = card?.cardName
+    }
 
     private func configureCardImageView() {
         cardImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +50,6 @@ final class CardTableViewCell: UITableViewCell {
 
     private func configureNameLabel() {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.text = "Virtual card"
         nameLabel.font = style.nameLabelFont
         nameLabel.textColor = style.nameLabelTextColor
         addSubview(nameLabel)

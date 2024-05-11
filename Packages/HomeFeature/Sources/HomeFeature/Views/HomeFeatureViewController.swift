@@ -78,52 +78,14 @@ final class HomeFeatureViewController: UIViewController {
 extension HomeFeatureViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        3
+        viewModel.numbersOfSection
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            if viewModel.cardBalance?.balance != nil {
-                return 1
-            }
-        case 1:
-            if let cards = viewModel.cardsResponse?.cards {
-                return cards.count + 1
-            }
-        case 2:
-            if let transactions = viewModel.transactionsResponse?.transactions {
-                return transactions.count + 1
-            }
-        default:
-            return 0
-        }
-        return 0
+        viewModel.numberOfRowsInSection(section: section)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let header: HeaderTableViewCell = tableView.dequeueReusableCell()
-        switch indexPath.section {
-        case 0:
-            let cell: TopTableViewCell = tableView.dequeueReusableCell()
-            cell.configure(balance: viewModel.cardBalance)
-            return cell
-        case 1:
-            if indexPath.item == 0 {
-                header.configure(title: "My cards")
-                return header
-            }
-            let cell: CardTableViewCell = tableView.dequeueReusableCell()
-            return cell
-        case 2:
-            if indexPath.item == 0 {
-                header.configure(title: "Recent transactions")
-                return header
-            }
-            let cell: TransactionTableViewCell = tableView.dequeueReusableCell()
-            return cell
-        default:
-            return UITableViewCell()
-        }
+        viewModel.cellConfigure(tableView: tableView, indexPath: indexPath)
     }
 }

@@ -12,13 +12,15 @@ let package = Package(
             targets: ["EmptyFeature"])
     ],
     dependencies: [
-        .package(name: "CoreCoordinator", path: "../CoreCoordinator")
+        .package(name: "CoreCoordinator", path: "../CoreCoordinator"),
+        .package(name: "CoreUI", path: "../CoreUI")
     ],
     targets: [
         .target(
             name: "EmptyFeature",
             dependencies: [
-                .product(name: "CoreCoordinator", package: "CoreCoordinator")
+                .product(name: "CoreCoordinator", package: "CoreCoordinator"),
+                .product(name: "CoreUI", package: "CoreUI")
             ],
             path: "Sources",
             resources: [.process("Resources/Assets.xcassets")]),

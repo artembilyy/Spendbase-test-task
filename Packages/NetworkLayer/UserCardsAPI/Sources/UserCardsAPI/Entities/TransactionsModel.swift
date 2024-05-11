@@ -5,7 +5,7 @@
 //  Created by Artem Bilyi on 09.05.2024.
 //
 
-import Foundation
+import UIKit
 
 public struct TransactionsModel {
 
@@ -26,8 +26,8 @@ public struct TransactionsModel {
 
 extension TransactionsModel {
     static let mockData = Self(transactions: [
-        Transaction(id: "1", tribeTransactionId: "12345", tribeCardId: 1, amount: "1000", status: "Completed", tribeTransactionType: "Load", schemeId: "CASH", merchantName: "unknown", pan: "unkown"),
-        Transaction(id: "2", tribeTransactionId: "67890", tribeCardId: 2, amount: "500", status: "Declined", tribeTransactionType: "Withdrawal", schemeId: "Mastercard", merchantName: "ATM", pan: "** 5678"),
-        Transaction(id: "3", tribeTransactionId: "54321", tribeCardId: 1, amount: "100.00", status: "Completed", tribeTransactionType: "Purchase", schemeId: "VISA", merchantName: "Grocery Store", pan: "** 1234")
+        Transaction(id: "1", tribeTransactionId: "12345", tribeCardId: 1, amount: "1000", status: "Completed", tribeTransactionType: "Load", schemeId: "CASH", merchantName: "Load", pan: ""),
+        Transaction(id: "2", tribeTransactionId: "67890", tribeCardId: 2, amount: "500", status: "Completed", tribeTransactionType: "Purchase", schemeId: "Mastercard", merchantName: "Google", pan: "** 5678"),
+        Transaction(id: "3", tribeTransactionId: "54321", tribeCardId: 1, amount: "1299", status: "Declined", tribeTransactionType: "Purchase", schemeId: "VISA", merchantName: "Google", pan: "** 1234")
     ])
 }
