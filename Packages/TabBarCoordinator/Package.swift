@@ -12,12 +12,14 @@ let package = Package(
             targets: ["TabBarCoordinator"])
     ],
     dependencies: [
+        .package(name: "CoreUI", path: "../CoreUI"),
         .package(name: "CoreCoordinator", path: "../CoreCoordinator")
     ],
     targets: [
         .target(
             name: "TabBarCoordinator",
             dependencies: [
+                .product(name: "CoreUI", package: "CoreUI"),
                 .product(name: "CoreCoordinator", package: "CoreCoordinator")
             ],
             path: "Sources",

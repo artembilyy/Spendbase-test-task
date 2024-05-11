@@ -5,8 +5,8 @@
 //  Created by Artem Bilyi on 10.05.2024.
 //
 
-import CoreUI
 import UIKit
+import CoreUI
 
 public final class TabBarController: UITabBarController {
 
