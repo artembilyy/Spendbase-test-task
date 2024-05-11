@@ -215,11 +215,13 @@ final class MoneyTransferViewController: UIViewController {
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            verticalStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             verticalStackView.topAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor,
                 constant: layout.verticalStackViewTopOffset),
-            verticalStackView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            verticalStackView.leadingAnchor.constraint(
+                equalTo: continueButton.leadingAnchor),
+            verticalStackView.trailingAnchor.constraint(
+                equalTo: continueButton.trailingAnchor),
 
             continueButton.topAnchor.constraint(
                 equalTo: verticalStackView.bottomAnchor,
