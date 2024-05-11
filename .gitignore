@@ -25,12 +25,8 @@ playground.xcworkspace
 .build/
 .accio/
 
-.gitattributes
-.swift-version
-.swiftformat
-.swiftlint
+
 README.md
-project.yml
 
 # OS generated files #
 ######################
