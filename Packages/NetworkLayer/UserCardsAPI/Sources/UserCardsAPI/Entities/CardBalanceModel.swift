@@ -8,7 +8,7 @@
 import Foundation
 
 public struct CardBalanceModel: Decodable {
-    public let balance: Double
+    public var balance: Double
 }
 
 extension CardBalanceModel {

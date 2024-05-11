@@ -11,5 +11,4 @@ import CardDataStorage
 public struct ModuleDependencies: HomeFeatureViewModel.Dependencies {
     public var cardDataStorage: CardDataStorage
     public let cardDataFetcheServicer: CardDataFetcherService
-
 }

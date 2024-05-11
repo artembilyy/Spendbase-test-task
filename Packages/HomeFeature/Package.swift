@@ -16,7 +16,8 @@ let package = Package(
         .package(name: "CoreUI", path: "../CoreUI"),
         .package(name: "UserCardsAPI", path: "../UserCardsAPI"),
         .package(name: "CardDataStorage", path: "../CardDataStorage"),
-        .package(name: "CardDataFetcher", path: "../CardDataFetcher")
+        .package(name: "CardDataFetcher", path: "../CardDataFetcher"),
+        .package(name: "MoneyTransferFeature", path: "../MoneyTransferFeature")
     ],
     targets: [
         .target(
@@ -25,7 +26,8 @@ let package = Package(
                 .product(name: "CoreUI", package: "CoreUI"),
                 .product(name: "UserCardsAPI", package: "UserCardsAPI"),
                 .product(name: "CardDataStorage", package: "CardDataStorage"),
-                .product(name: "CardDataFetcher", package: "CardDataFetcher")
+                .product(name: "CardDataFetcher", package: "CardDataFetcher"),
+                .product(name: "MoneyTransferFeature", package: "MoneyTransferFeature")
             ],
             path: "Sources",
             resources: [.process("Resources/Assets.xcassets")]),

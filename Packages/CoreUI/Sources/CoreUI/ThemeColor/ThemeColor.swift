@@ -9,6 +9,7 @@ import Foundation
 
 public enum ThemeColor: UInt, ColorConvertible {
 
+    case white = 0xFFFFFF
     case black = 0x111111
     case darkGrayishBlue = 0x7E8493
     case lightGrayishBlue = 0xF6F7F9

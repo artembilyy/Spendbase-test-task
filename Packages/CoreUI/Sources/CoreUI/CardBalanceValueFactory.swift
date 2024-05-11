@@ -8,16 +8,16 @@
 import Foundation
 import UserCardsAPI
 
-enum CardBalanceValueFactory {
+public enum CardBalanceValueFactory {
 
     private static let country = "€"
 
-    static func configure(cardBalance: CardBalanceModel?) -> String? {
-        guard let cardBalance else { return nil }
+    public static func configure(cardBalance: CardBalanceModel?) -> String {
+        guard let cardBalance else { return "\(country)0.0" }
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
         numberFormatter.locale = Locale(identifier: "en_US")
         let formattedNumber = numberFormatter.string(from: NSNumber(value: cardBalance.balance))
-        return country + (formattedNumber ?? "0")
+        return country + (formattedNumber ?? "0.0")
     }
 }

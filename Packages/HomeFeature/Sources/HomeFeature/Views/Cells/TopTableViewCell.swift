@@ -5,6 +5,7 @@
 //  Created by Artem Bilyi on 10.05.2024.
 //
 
+import CardDataStorage
 import CoreUI
 import UIKit
 import UserCardsAPI

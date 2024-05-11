@@ -17,35 +17,95 @@ public final class HomeFeatureViewModel {
         CardDataFetcherContainer &
         CardDataStorageContainer
 
+    private enum SectionType {
+        case cardBalance
+        case cardsResponse
+        case transactionsResponse
+
+        var title: String {
+            switch self {
+            case .cardsResponse:
+                return "My cards"
+            case .transactionsResponse:
+                return "Recent transactions"
+            default:
+                return ""
+            }
+        }
+    }
+
+    private var sectionTypes = [SectionType]()
+
     enum LoadingState {
         case start
         case success
         case failure(Error)
     }
 
-    private enum SectionType {
-        case cardBalance
-        case cardsResponse
-        case transactionsResponse
-    }
-
-    private var sectionTypes = [SectionType]()
-
     var cardBalance: CardBalanceModel? {
-        //        nil
         dependencies.cardDataStorage.userBalance
     }
 
     var cardsResponse: CardsModel? {
-        //        nil
         dependencies.cardDataStorage.userCards
     }
 
     var transactionsResponse: TransactionsModel? {
-        //        nil
         dependencies.cardDataStorage.userTransactions
     }
 
+    private(set) var loadingState = PassthroughSubject<LoadingState, Never>()
+    private let subjectPresentMoneyTrasfer = PassthroughSubject<Void, Never>()
+
+    var presentMoneyTrasferObservable: AnyPublisher<Void, Never> {
+        subjectPresentMoneyTrasfer.eraseToAnyPublisher()
+    }
+
+    private let dependencies: Dependencies
+    private var subscriptions = Set<AnyCancellable>()
+
+    init(dependencies: Dependencies) {
+        self.dependencies = dependencies
+    }
+
+    func rightBarButtonPressed() {
+        subjectPresentMoneyTrasfer.send()
+    }
+
+    func fetchAllData() {
+        loadingState.send(.start)
+        Task {
+            try await Task.sleep(nanoseconds: 3_500_000_000)
+            dependencies
+                .cardDataFetcheServicer
+                .fetchAllData()
+                .sink(receiveCompletion: { [unowned self] completion in
+                    switch completion {
+                    case .finished:
+                        sectionsConfigure()
+                        loadingState.send(.success)
+                    case .failure(let error):
+                        loadingState.send(.failure(error))
+                    }
+                }, receiveValue: {})
+                .store(in: &subscriptions)
+        }
+    }
+
+    private func sectionsConfigure() {
+        if cardBalance != nil {
+            sectionTypes.append(.cardBalance)
+        }
+        if cardsResponse != nil {
+            sectionTypes.append(.cardsResponse)
+        }
+        if transactionsResponse != nil {
+            sectionTypes.append(.transactionsResponse)
+        }
+    }
+}
+
+extension HomeFeatureViewModel {
     var numbersOfSection: Int {
         sectionTypes.count
     }
@@ -76,7 +136,7 @@ public final class HomeFeatureViewModel {
             return cell
         case .cardsResponse:
             if indexPath.item == 0 {
-                header.configure(title: "My cards")
+                header.configure(title: sectionType.title)
                 return header
             }
             let cell: CardTableViewCell = tableView.dequeueReusableCell()
@@ -84,55 +144,12 @@ public final class HomeFeatureViewModel {
             return cell
         case .transactionsResponse:
             if indexPath.item == 0 {
-                header.configure(title: "Recent transactions")
+                header.configure(title: sectionType.title)
                 return header
             }
             let cell: TransactionTableViewCell = tableView.dequeueReusableCell()
             cell.configure(transaction: transactionsResponse?.transactions[indexPath.row - 1])
             return cell
-        }
-    }
-
-    private(set) var loadingState = PassthroughSubject<LoadingState, Never>()
-
-    private let dependencies: Dependencies
-    private var subscriptions = Set<AnyCancellable>()
-
-    init(dependencies: Dependencies) {
-        self.dependencies = dependencies
-    }
-
-    func fetchAllData() {
-        loadingState.send(.start)
-        Task {
-            try await Task.sleep(nanoseconds: 3_500_000_000)
-            dependencies
-                .cardDataFetcheServicer
-                .fetchAllData()
-                .sink(receiveCompletion: { [unowned self] completion in
-                    switch completion {
-                    case .finished:
-                        sectionsConfigure()
-                        loadingState.send(.success)
-                    case .failure(let error):
-                        loadingState.send(.failure(error))
-                    }
-                }, receiveValue: {})
-                .store(in: &subscriptions)
-        }
-    }
-
-    private func sectionsConfigure() {
-        if cardBalance != nil {
-            sectionTypes.append(.cardBalance)
-        }
-
-        if cardsResponse != nil {
-            sectionTypes.append(.cardsResponse)
-        }
-
-        if transactionsResponse != nil {
-            sectionTypes.append(.transactionsResponse)
         }
     }
 }

@@ -30,8 +30,7 @@ final class HomeFeatureViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(tableView)
-        view.backgroundColor = .white
+        setupUI()
         bindings()
         viewModel.fetchAllData()
     }
@@ -40,6 +39,22 @@ final class HomeFeatureViewController: UIViewController {
         super.viewDidLayoutSubviews()
         loadingIndicator.install(on: tableView, with: .large)
 
+    }
+
+    private func setupUI() {
+        view.addSubview(tableView)
+        view.backgroundColor = .white
+
+        let barButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "plus"),
+            style: .done,
+            target: self,
+            action: #selector(rightBarButtonItemPressed))
+        navigationItem.rightBarButtonItem = barButtonItem
+    }
+
+    @objc private func rightBarButtonItemPressed() {
+        viewModel.rightBarButtonPressed()
     }
 
     private func bindings() {
