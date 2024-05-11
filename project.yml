@@ -1,0 +1,71 @@
+name: Spendbase
+
+options:
+  xcodeVersion: 15.0
+  deploymentTarget:
+    iOS: 17.0
+  groupSortPosition: top
+  generateEmptyDirectories: true
+
+settings:
+  SWIFT_VERSION: "5.9"
+  MARKETING_VERSION: "1.0.0"
+  CURRENT_PROJECT_VERSION: "1"
+  ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
+  ENABLE_USER_SCRIPT_SANDBOXING: YES
+
+packages:
+  LaunchSplashScreen:
+    path: Packages/LaunchSplashScreen
+  CoreCoordinator:
+    path: Packages/CoreCoordinator
+  CoreUI:
+    path: Packages/CoreUI
+  AppFactory:
+    path: Packages/AppFactory
+  CoreNetwork:
+    path: Packages/NetworkLayer/CoreNetwork
+    group: Packages/NetworkLayer
+  UserCardsAPI:
+    path: Packages/NetworkLayer/UserCardsAPI
+    group: Packages/NetworkLayer
+  TabBarCoordinator:
+    path: Packages/TabBarCoordinator
+  HomeFeature:
+    path: Packages/HomeFeature
+  EmptyFeature:
+    path: Packages/EmptyFeature
+  CardDataStorage:
+    path: Packages/Storage/CardDataStorage
+    group: Packages/Storage
+  CardDataFetcher:
+    path: Packages/CardDataFetcher
+  MoneyTransferFeature:
+    path: Packages/MoneyTransferFeature
+
+targets:
+  App:
+    type: application
+    platform: iOS
+    sources:
+      - App
+    dependencies:
+      - package: LaunchSplashScreen
+      - package: CoreCoordinator
+      - package: CoreUI
+      - package: AppFactory
+      - package: CoreNetwork
+      - package: UserCardsAPI
+      - package: TabBarCoordinator
+      - package: HomeFeature
+      - package: EmptyFeature
+      - package: CardDataStorage
+      - package: CardDataFetcher
+      - package: MoneyTransferFeature
+    settings:
+      base:
+        PRODUCT_NAME: Spendbase
+        PRODUCT_MODULE_NAME: Spendbase
+        PRODUCT_BUNDLE_IDENTIFIER: 'com.Spendbase.app'
+        CODE_SIGN_STYLE: Automatic
+        INFOPLIST_FILE: App/Resources/Info.plist
