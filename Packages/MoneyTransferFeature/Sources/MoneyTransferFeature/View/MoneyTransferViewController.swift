@@ -97,6 +97,15 @@ final class MoneyTransferViewController: UIViewController {
         super.viewDidDisappear(animated)
         viewModel.dismiss()
     }
+    
+    private func setupUI() {
+        configureVerticalStackView()
+        configureHorizontalStackView()
+        configureBottomLabel()
+        configureTopLabel()
+        configureTextFiled()
+        configureCTAButton()
+    }
 
     private func bindings() {
         NotificationCenter
@@ -169,7 +178,6 @@ final class MoneyTransferViewController: UIViewController {
         textField.keyboardType = .decimalPad
         textField.font = style.topLabelFont
         textField.textColor = style.textFieldTextColor
-        textField.becomeFirstResponder()
     }
 
     private func configureCTAButton() {
@@ -186,15 +194,6 @@ final class MoneyTransferViewController: UIViewController {
         UIAction { [unowned self] _ in
             viewModel.ctaButtonPressed()
         }
-    }
-
-    private func setupUI() {
-        configureVerticalStackView()
-        configureHorizontalStackView()
-        configureBottomLabel()
-        configureTopLabel()
-        configureTextFiled()
-        configureCTAButton()
     }
 
     private func configureVC() {
@@ -233,7 +232,9 @@ final class MoneyTransferViewController: UIViewController {
             continueButton.heightAnchor.constraint(equalToConstant: layout.continueButtonHeight)
         ])
     }
-    
+}
+
+extension MoneyTransferViewController {
     private final class TextField: UITextField {
 
         override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
