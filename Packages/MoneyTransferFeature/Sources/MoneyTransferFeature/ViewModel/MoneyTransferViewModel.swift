@@ -51,6 +51,7 @@ public final class MoneyTransferViewModel {
     var ctaButtonInteractionObservable: AnyPublisher<Void, Never> {
         subjectCTAButtonInteraction.eraseToAnyPublisher()
     }
+
     private var dependencies: Dependencies
 
     init(dependencies: Dependencies) {
@@ -60,9 +61,13 @@ public final class MoneyTransferViewModel {
     func ctaButtonPressed() {
         subjectCTAButtonInteraction.send()
     }
-
-    func crossButtonpressed() {
+    
+    func crossButtonPressed() {
         subjectCrossButtonInteraction.send()
+    }
+    
+    func dismiss() {
+        crossButtonPressed()
     }
 
     private func validateTextField(_ value: String) -> TextFieldStatus {

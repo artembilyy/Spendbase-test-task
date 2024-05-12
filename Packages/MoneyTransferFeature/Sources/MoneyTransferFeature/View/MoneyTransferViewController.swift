@@ -93,14 +93,17 @@ final class MoneyTransferViewController: UIViewController {
         setupDismissKeyboardGesture()
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel.dismiss()
+    }
+
     private func bindings() {
         NotificationCenter
             .default
             .publisher(for: UITextField.textDidChangeNotification, object: textField)
-            .map({ ($0.object as! UITextField).text ?? "" })
-            .sink { [unowned self] text in
-                viewModel.subjectTextFieldText.send(text)
-            }
+            .map({ ($0.object as? UITextField)?.text  ?? "" })
+            .assign(to: \.value, on: viewModel.subjectTextFieldText)
             .store(in: &subscriptions)
 
         viewModel
@@ -166,6 +169,7 @@ final class MoneyTransferViewController: UIViewController {
         textField.keyboardType = .decimalPad
         textField.font = style.topLabelFont
         textField.textColor = style.textFieldTextColor
+        textField.becomeFirstResponder()
     }
 
     private func configureCTAButton() {
@@ -203,7 +207,7 @@ final class MoneyTransferViewController: UIViewController {
 
     private func crossButtonPressed() -> UIAction {
         UIAction { [unowned self] _ in
-            viewModel.crossButtonpressed()
+            viewModel.crossButtonPressed()
         }
     }
 
@@ -229,10 +233,9 @@ final class MoneyTransferViewController: UIViewController {
             continueButton.heightAnchor.constraint(equalToConstant: layout.continueButtonHeight)
         ])
     }
-}
+    
+    private final class TextField: UITextField {
 
-extension MoneyTransferViewController {
-    final class TextField: UITextField {
         public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
             if action == #selector(UIResponderStandardEditActions.cut) {
                 return false
