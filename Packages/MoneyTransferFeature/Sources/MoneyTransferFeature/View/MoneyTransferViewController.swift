@@ -66,7 +66,7 @@ final class MoneyTransferViewController: UIViewController {
     private let verticalStackView = UIStackView()
     private let horizontalStackView = UIStackView()
     private let bottomLabel = UILabel()
-    private let textField = UITextField()
+    private let textField = TextField()
     private let topLabel = UILabel()
     private let continueButton = UIButton()
 
@@ -100,8 +100,6 @@ final class MoneyTransferViewController: UIViewController {
             .map({ ($0.object as! UITextField).text ?? "" })
             .sink { [unowned self] text in
                 viewModel.subjectTextFieldText.send(text)
-                textField.sizeToFit()
-                horizontalStackView.sizeToFit()
             }
             .store(in: &subscriptions)
 
@@ -168,7 +166,6 @@ final class MoneyTransferViewController: UIViewController {
         textField.keyboardType = .decimalPad
         textField.font = style.topLabelFont
         textField.textColor = style.textFieldTextColor
-
     }
 
     private func configureCTAButton() {
@@ -200,17 +197,14 @@ final class MoneyTransferViewController: UIViewController {
         title = Strings.title.rawValue
         view.backgroundColor = ThemeColor.white.asUIColor()
         let crossImage = UIImage(resource: .cross)
-        let barButtonItem = UIBarButtonItem(
-            image: crossImage,
-            style: .done,
-            target: self,
-            action: #selector(crossButtonPressed))
+        let barButtonItem = UIBarButtonItem(image: crossImage, primaryAction: crossButtonPressed())
         navigationItem.rightBarButtonItem = barButtonItem
     }
 
-    @objc
-    private func crossButtonPressed() {
-        viewModel.crossButtonpressed()
+    private func crossButtonPressed() -> UIAction {
+        UIAction { [unowned self] _ in
+            viewModel.crossButtonpressed()
+        }
     }
 
     private func setupConstraints() {
@@ -234,5 +228,19 @@ final class MoneyTransferViewController: UIViewController {
                 constant: layout.continueButtonTrailingOffset),
             continueButton.heightAnchor.constraint(equalToConstant: layout.continueButtonHeight)
         ])
+    }
+}
+
+extension MoneyTransferViewController {
+    final class TextField: UITextField {
+        public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+            if action == #selector(UIResponderStandardEditActions.cut) {
+                return false
+            }
+            if action == #selector(UIResponderStandardEditActions.delete) {
+                return false
+            }
+            return super.canPerformAction(action, withSender: sender)
+        }
     }
 }

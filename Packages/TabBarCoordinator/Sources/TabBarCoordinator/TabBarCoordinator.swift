@@ -33,8 +33,8 @@ public final class TabBarCoordinator: Coordinator {
             guard let navigationController = tabBarController.viewControllers?[index] as? UINavigationController else {
                 return
             }
-            navigationController.tabBarItem = TabBarItemFactory.createItem(tab)
             navigationController.viewControllers.first?.title = tab.navigationTitle
+            navigationController.tabBarItem = TabBarItemFactory.createItem(tab)
         }
     }
 

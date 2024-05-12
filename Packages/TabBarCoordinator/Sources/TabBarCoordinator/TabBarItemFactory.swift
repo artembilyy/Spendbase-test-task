@@ -22,7 +22,7 @@ enum TabBarItemFactory {
             case .home:
                 return "Money"
             case .myCards:
-                return "My cards"
+                return formatTitleForNavigation(title)
             }
         }
 
@@ -59,6 +59,16 @@ enum TabBarItemFactory {
             case .account:
                 return 3
             }
+        }
+        
+        private func formatTitleForNavigation(_ title: String) -> String {
+            let lowercaseTitle = title.lowercased()
+            guard let firstChar = lowercaseTitle.first else {
+                return ""
+            }
+            let capitalizedFirstChar = String(firstChar).uppercased()
+            let restOfTitle = String(lowercaseTitle.dropFirst())
+            return capitalizedFirstChar + restOfTitle
         }
     }
 

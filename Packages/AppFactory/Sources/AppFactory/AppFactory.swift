@@ -17,6 +17,8 @@ public final class AppFactory {
 }
 
 public extension AppFactory {
+    
+    private typealias EmptyFeatureType = EmptyFeatureViewController.EmptyFeatureType
 
     func makeTabBarCoordinator() -> TabBarCoordinator {
         let tabBarCoordinator = TabBarCoordinator()
@@ -24,13 +26,13 @@ public extension AppFactory {
         let homeFeatureCoordinator = makeHomeFeatureCoordinator()
         tabBarCoordinator.setupChildCoordinator(homeFeatureCoordinator)
 
-        let transactionsCoordinator = makeEmptyFeatureCoordinator()
+        let transactionsCoordinator = makeEmptyFeatureCoordinator(type: .transactions)
         tabBarCoordinator.setupChildCoordinator(transactionsCoordinator)
 
-        let myCardsCoordinator = makeEmptyFeatureCoordinator()
+        let myCardsCoordinator = makeEmptyFeatureCoordinator(type: .myCard)
         tabBarCoordinator.setupChildCoordinator(myCardsCoordinator)
 
-        let accountCoordinator = makeEmptyFeatureCoordinator()
+        let accountCoordinator = makeEmptyFeatureCoordinator(type: .account)
         tabBarCoordinator.setupChildCoordinator(accountCoordinator)
 
         return tabBarCoordinator
@@ -44,9 +46,9 @@ public extension AppFactory {
         return coordinator
     }
 
-    private func makeEmptyFeatureCoordinator() -> EmptyFeatureCoordinator {
+    private func makeEmptyFeatureCoordinator(type: EmptyFeatureType) -> EmptyFeatureCoordinator {
         let navigationController = UINavigationController()
-        let coordinator = EmptyFeatureCoordinator(navigationController: navigationController)
+        let coordinator = EmptyFeatureCoordinator(navigationController: navigationController, type: type)
         return coordinator
     }
 }

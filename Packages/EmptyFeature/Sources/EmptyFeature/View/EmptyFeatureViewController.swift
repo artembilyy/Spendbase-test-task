@@ -7,9 +7,33 @@
 
 import UIKit
 
-final class EmptyFeatureViewController: UIViewController {
+public final class EmptyFeatureViewController: UIViewController {
+    
+    public enum EmptyFeatureType {
+        case transactions
+        case myCard
+        case account
+    }
+    
+    private var emptyFeatureType: EmptyFeatureType!
+    
+    func set(emptyFeatureType: EmptyFeatureType) {
+        self.emptyFeatureType = emptyFeatureType
+    }
 
-    override func loadView() {
+    public override func loadView() {
         view = ComingSoonView()
+    }
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        if case .myCard = emptyFeatureType {
+            addUIBarButtonItem()
+        }
+    }
+    
+    private func addUIBarButtonItem() {
+        let barButtonItem = UIBarButtonItem(systemItem: .add)
+        navigationItem.rightBarButtonItem = barButtonItem
     }
 }

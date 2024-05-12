@@ -10,11 +10,19 @@ import CoreUI
 import UIKit
 
 final class HomeFeatureViewController: UIViewController {
-
-    private let viewModel: HomeFeatureViewModel
-
+    
+    private struct Style {
+        let sectionHeaderHeight: CGFloat = 0
+        let sectionFooterHeight: CGFloat = 24
+        let backgroundColor = ThemeColor.lightGrayishBlue.asUIColor()
+    }
+    
+    private let style = Style()
+    
     private lazy var tableView = createTableView()
-    private var loadingIndicator = LoadingIndicator()
+    private let loadingIndicator = LoadingIndicator()
+    
+    private let viewModel: HomeFeatureViewModel
 
     private var subscriptions = Set<AnyCancellable>()
 
@@ -43,18 +51,16 @@ final class HomeFeatureViewController: UIViewController {
 
     private func setupUI() {
         view.addSubview(tableView)
-        view.backgroundColor = .white
+        view.backgroundColor = style.backgroundColor
 
-        let barButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "plus"),
-            style: .done,
-            target: self,
-            action: #selector(rightBarButtonItemPressed))
+        let barButtonItem = UIBarButtonItem(systemItem: .add, primaryAction: rightBarButtonItemPressed())
         navigationItem.rightBarButtonItem = barButtonItem
     }
 
-    @objc private func rightBarButtonItemPressed() {
-        viewModel.rightBarButtonPressed()
+    private func rightBarButtonItemPressed() -> UIAction {
+        UIAction { [unowned self] _ in
+            viewModel.rightBarButtonPressed()
+        }
     }
 
     private func bindings() {
@@ -84,8 +90,8 @@ final class HomeFeatureViewController: UIViewController {
         tableView.registerCell(TransactionTableViewCell.self)
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.sectionHeaderHeight = 0
-        tableView.sectionFooterHeight = 24
+        tableView.sectionHeaderHeight = style.sectionHeaderHeight
+        tableView.sectionFooterHeight = style.sectionFooterHeight
         return tableView
     }
 }
