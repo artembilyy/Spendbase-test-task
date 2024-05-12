@@ -17,7 +17,7 @@ public final class HomeFeatureViewModel {
         CardDataFetcherContainer &
         CardDataStorageContainer
 
-    private enum SectionType {
+    enum SectionType {
         case cardBalance
         case cardsResponse
         case transactionsResponse
@@ -34,7 +34,7 @@ public final class HomeFeatureViewModel {
         }
     }
 
-    private var sectionTypes = [SectionType]()
+    private(set) var sectionTypes = [SectionType]()
 
     enum LoadingState {
         case start
@@ -53,6 +53,8 @@ public final class HomeFeatureViewModel {
     var transactionsResponse: TransactionsModel? {
         dependencies.cardDataStorage.userTransactions
     }
+    
+    lazy var dataSource = HomeFeatureDataSource(viewModel: self)
 
     private(set) var loadingState = PassthroughSubject<LoadingState, Never>()
     private let subjectPresentMoneyTrasfer = PassthroughSubject<Void, Never>()
@@ -75,7 +77,7 @@ public final class HomeFeatureViewModel {
     func fetchAllData() {
         loadingState.send(.start)
         Task {
-            try await Task.sleep(nanoseconds: 3_500_000_000)
+            try await Task.sleep(nanoseconds: 2_500_000_000)
             dependencies
                 .cardDataFetcheServicer
                 .fetchAllData()
@@ -101,55 +103,6 @@ public final class HomeFeatureViewModel {
         }
         if transactionsResponse != nil {
             sectionTypes.append(.transactionsResponse)
-        }
-    }
-}
-
-extension HomeFeatureViewModel {
-    var numbersOfSection: Int {
-        sectionTypes.count
-    }
-
-    func numberOfRowsInSection(section: Int) -> Int {
-        guard section < sectionTypes.count else { return 0 }
-
-        let sectionType = sectionTypes[section]
-        switch sectionType {
-        case .cardBalance:
-            return cardBalance?.balance != nil ? 1 : 0
-        case .cardsResponse:
-            return (cardsResponse?.cards.count ?? 0) + 1
-        case .transactionsResponse:
-            return (transactionsResponse?.transactions.count ?? 0) + 1
-        }
-    }
-
-    func cellConfigure(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
-        let header: HeaderTableViewCell = tableView.dequeueReusableCell()
-
-        let sectionType = sectionTypes[indexPath.section]
-
-        switch sectionType {
-        case .cardBalance:
-            let cell: TopTableViewCell = tableView.dequeueReusableCell()
-            cell.configure(balance: cardBalance)
-            return cell
-        case .cardsResponse:
-            if indexPath.item == 0 {
-                header.configure(title: sectionType.title)
-                return header
-            }
-            let cell: CardTableViewCell = tableView.dequeueReusableCell()
-            cell.configure(card: cardsResponse?.cards[indexPath.row - 1])
-            return cell
-        case .transactionsResponse:
-            if indexPath.item == 0 {
-                header.configure(title: sectionType.title)
-                return header
-            }
-            let cell: TransactionTableViewCell = tableView.dequeueReusableCell()
-            cell.configure(transaction: transactionsResponse?.transactions[indexPath.row - 1])
-            return cell
         }
     }
 }

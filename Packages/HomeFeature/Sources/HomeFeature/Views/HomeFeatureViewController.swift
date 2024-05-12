@@ -88,25 +88,11 @@ final class HomeFeatureViewController: UIViewController {
         tableView.registerCell(CardTableViewCell.self)
         tableView.registerCell(HeaderTableViewCell.self)
         tableView.registerCell(TransactionTableViewCell.self)
-        tableView.dataSource = self
+        tableView.dataSource = viewModel.dataSource
         tableView.separatorStyle = .none
         tableView.sectionHeaderHeight = style.sectionHeaderHeight
         tableView.sectionFooterHeight = style.sectionFooterHeight
+        tableView.backgroundColor = style.backgroundColor
         return tableView
-    }
-}
-
-extension HomeFeatureViewController: UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        viewModel.numbersOfSection
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.numberOfRowsInSection(section: section)
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        viewModel.cellConfigure(tableView: tableView, indexPath: indexPath)
     }
 }

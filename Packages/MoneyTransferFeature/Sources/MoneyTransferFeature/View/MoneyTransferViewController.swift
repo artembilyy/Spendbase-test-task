@@ -236,7 +236,7 @@ final class MoneyTransferViewController: UIViewController {
     
     private final class TextField: UITextField {
 
-        public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
             if action == #selector(UIResponderStandardEditActions.cut) {
                 return false
             }

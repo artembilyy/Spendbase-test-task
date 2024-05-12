@@ -30,7 +30,6 @@ public final class MoneyTransferFeatureCoordinator: Coordinator {
             .crossButtonInteractionObservable
             .sink { [unowned self] _ in
                 navigationController?.dismiss(animated: true)
-                finish()
             }
             .store(in: &subscriptions)
 
@@ -38,6 +37,12 @@ public final class MoneyTransferFeatureCoordinator: Coordinator {
             .ctaButtonInteractionObservable
             .sink { [unowned self] _ in
                 navigationController?.dismiss(animated: true)
+            }
+            .store(in: &subscriptions)
+        
+        viewModel
+            .dismissObservable
+            .sink { [unowned self] _ in
                 finish()
             }
             .store(in: &subscriptions)

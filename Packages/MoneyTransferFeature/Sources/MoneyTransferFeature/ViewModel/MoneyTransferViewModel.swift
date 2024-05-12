@@ -25,6 +25,7 @@ public final class MoneyTransferViewModel {
 
     private let subjectCrossButtonInteraction = PassthroughSubject<Void, Never>()
     private let subjectCTAButtonInteraction = PassthroughSubject<Void, Never>()
+    private let subjectDismiss = PassthroughSubject<Void, Never>()
 
     private var cardBalance: CardBalanceModel? {
         dependencies
@@ -52,6 +53,10 @@ public final class MoneyTransferViewModel {
         subjectCTAButtonInteraction.eraseToAnyPublisher()
     }
 
+    var dismissObservable: AnyPublisher<Void, Never> {
+        subjectDismiss.eraseToAnyPublisher()
+    }
+
     private var dependencies: Dependencies
 
     init(dependencies: Dependencies) {
@@ -67,7 +72,7 @@ public final class MoneyTransferViewModel {
     }
     
     func dismiss() {
-        crossButtonPressed()
+        subjectDismiss.send()
     }
 
     private func validateTextField(_ value: String) -> TextFieldStatus {
